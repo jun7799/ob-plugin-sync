@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { compareVersions } from "./diff";
-import { readPluginVersion } from "./vaults";
+import { DEFAULT_CONFIG_DIR, readJsonAs, readPluginVersion } from "./vaults";
 import type { PluginInfo, VaultEntry } from "./types";
 
 export interface PushOptions {
@@ -67,7 +67,7 @@ export function pushOnePlugin(
 	opts: PushOptions,
 ): PushItemResult {
 	const base = { vaultName: path.basename(target.path), pluginId: sourcePlugin.id, pluginName: sourcePlugin.name };
-	const targetPluginDir = path.join(target.path, ".obsidian", "plugins", sourcePlugin.id);
+	const targetPluginDir = path.join(target.path, DEFAULT_CONFIG_DIR, "plugins", sourcePlugin.id);
 
 	const targetVersion = readTargetVersion(target, sourcePlugin.id);
 	const { action, downgrade } = classifyPushAction(sourcePlugin.version, targetVersion, opts.overwrite);
@@ -86,14 +86,10 @@ export function pushOnePlugin(
 
 		// 源仓库启用的插件 → 写入目标的启用列表
 		if (sourcePlugin.enabled) {
-			const cpJsonPath = path.join(target.path, ".obsidian", "community-plugins.json");
-			let existing: string[] = [];
-			try {
-				const arr = JSON.parse(fs.readFileSync(cpJsonPath, "utf-8"));
-				if (Array.isArray(arr)) existing = arr.filter((x): x is string => typeof x === "string");
-			} catch {
-				// 目标没有启用列表（全新仓库）或文件损坏，按空列表重建
-			}
+			const cpJsonPath = path.join(target.path, DEFAULT_CONFIG_DIR, "community-plugins.json");
+			// 目标没有启用列表（全新仓库）或文件损坏时，按空列表重建
+			const arr = readJsonAs<unknown[]>(cpJsonPath);
+			const existing = Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string") : [];
 			const merged = mergeEnabledList(existing, [sourcePlugin.id]);
 			if (merged.length !== existing.length) {
 				fs.writeFileSync(cpJsonPath, JSON.stringify(merged, null, 2), "utf-8");

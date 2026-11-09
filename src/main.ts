@@ -77,8 +77,6 @@ class VpsSettingTab extends PluginSettingTab {
 		const currentPath = getCurrentVaultPath(this.app);
 		const otherVaults = listVaults().filter((v) => !isSamePath(v.path, currentPath));
 
-		new Setting(containerEl).setName("Vault Plugin Sync").setHeading();
-
 		if (otherVaults.length === 0) {
 			containerEl.createEl("p", {
 				text: "没有找到其他仓库。请先在 Obsidian 里打开过至少两个仓库，再使用本插件。",

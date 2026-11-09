@@ -1,4 +1,4 @@
-# Vault Plugin Sync
+﻿# Cross Vault Sync
 
 [English](#english) | [中文](#中文)
 

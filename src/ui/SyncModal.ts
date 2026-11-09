@@ -1,4 +1,4 @@
-import { Modal, Notice, type App } from "obsidian";
+﻿import { Modal, Notice, type App } from "obsidian";
 import { computeDiff, DIFF_GROUP_LABELS, type DiffEntry, type DiffKind } from "../diff";
 import { pushPlugins, classifyPushAction, type PushItemResult } from "../push";
 import { syncSelected, type SyncItemResult } from "../sync";
@@ -226,7 +226,7 @@ export class SyncModal extends Modal {
 			`已安装 ${ok} 个插件到「${vaultDisplayName(vault)}」${failed.length ? `，失败 ${failed.length} 个` : ""}。该仓库重载后生效。`,
 			6000,
 		);
-		if (failed.length) console.error("[Vault Plugin Sync] 安装失败项:", failed);
+		if (failed.length) console.error("[Cross Vault Sync] 安装失败项:", failed);
 
 		this.state = "ready";
 		await this.renderActiveView();
@@ -262,10 +262,9 @@ export class SyncModal extends Modal {
 			const cb = holder.createEl("input", { type: "checkbox" });
 			cb.checked = this.plugin.settings[key];
 			cb.id = `vps-opt-${key}`;
-			cb.addEventListener("change", async () => {
+			cb.addEventListener("change", () => {
 				this.plugin.settings[key] = cb.checked;
-				await this.plugin.saveSettings();
-				this.updatePushSummary();
+				void this.plugin.saveSettings().then(() => this.updatePushSummary());
 			});
 			holder.createEl("label", { text: label }).setAttribute("for", cb.id);
 			return cb;
@@ -431,7 +430,7 @@ export class SyncModal extends Modal {
 		const ok = results.filter((r) => r.action === "install" || r.action === "overwrite").length;
 		const failed = results.filter((r) => r.action === "error");
 		new Notice(`推送完成：${ok} 项生效${failed.length ? `，失败 ${failed.length} 项` : ""}。已打开的仓库重载后生效。`, 6000);
-		if (failed.length) console.error("[Vault Plugin Sync] 推送失败项:", failed);
+		if (failed.length) console.error("[Cross Vault Sync] 推送失败项:", failed);
 
 		this.state = "ready";
 		this.setBusy(false);
@@ -483,13 +482,12 @@ export class SyncModal extends Modal {
 			opt.value = v.id;
 		}
 		select.value = this.sourceVault.id;
-		select.addEventListener("change", async () => {
+		select.addEventListener("change", () => {
 			const next = this.vaults.find((v) => v.id === select.value);
 			if (!next) return;
 			this.sourceVault = next;
 			this.plugin.settings.sourceVaultId = next.id;
-			await this.plugin.saveSettings();
-			await this.renderActiveView();
+			void this.plugin.saveSettings().then(() => this.renderActiveView());
 		});
 
 		const setHolder = optBar.createDiv("vps-opt");
@@ -497,9 +495,9 @@ export class SyncModal extends Modal {
 		setCb.checked = this.plugin.settings.copySettings;
 		setCb.id = "vps-pull-copysettings";
 		setHolder.createEl("label", { text: "同时复制插件设置" }).setAttribute("for", setCb.id);
-		setCb.addEventListener("change", async () => {
+		setCb.addEventListener("change", () => {
 			this.plugin.settings.copySettings = setCb.checked;
-			await this.plugin.saveSettings();
+			void this.plugin.saveSettings();
 		});
 
 		this.renderPullList();
@@ -514,7 +512,7 @@ export class SyncModal extends Modal {
 			if (groupEntries.length === 0) continue;
 
 			const groupEl = listEl.createDiv("vps-group");
-			groupEl.createEl("div", {
+			groupEl.createDiv({
 				text: `${DIFF_GROUP_LABELS[kind]} · ${groupEntries.length}`,
 				cls: "vps-group-title",
 			});
@@ -615,7 +613,7 @@ export class SyncModal extends Modal {
 			if (!row) return;
 			const label =
 				r.status === "ok" ? "[OK]" : r.status === "skipped" ? "[跳过]" : `[ERROR] ${r.message ?? ""}`;
-			row.querySelector(".vps-item-meta")?.appendText(`　${label}`);
+			row.querySelector(".vps-item-meta")?.appendText(` ${label}`);
 			row.addClass(r.status === "error" ? "is-error" : "is-done");
 		};
 
@@ -632,7 +630,7 @@ export class SyncModal extends Modal {
 		const ok = results.filter((r) => r.status === "ok").length;
 		const failed = results.filter((r) => r.status === "error");
 		new Notice(`同步完成：成功 ${ok} 项${failed.length ? `，失败 ${failed.length} 项` : ""}`, 5000);
-		if (failed.length) console.error("[Vault Plugin Sync] 同步失败项:", failed);
+		if (failed.length) console.error("[Cross Vault Sync] 同步失败项:", failed);
 
 		this.state = "ready";
 		this.setBusy(false);
@@ -643,5 +641,5 @@ export class SyncModal extends Modal {
 }
 
 function sleep(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+	return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
