@@ -1,5 +1,5 @@
 {
-	"id": "obsidian-plugin-sync",
+	"id": "ob-plugin-sync",
 	"name": "Vault Plugin Sync",
 	"version": "1.2.1",
 	"minAppVersion": "1.4.0",

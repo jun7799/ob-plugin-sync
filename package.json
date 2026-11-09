@@ -1,5 +1,5 @@
 {
-	"name": "obsidian-plugin-sync",
+	"name": "ob-plugin-sync",
 	"version": "1.2.1",
 	"description": "Sync community plugins from another Obsidian vault into the current vault",
 	"main": "main.js",
