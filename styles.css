@@ -1,0 +1,347 @@
+/* ==========================================================================
+   Vault Plugin Sync —— 面板样式
+   全部使用 Obsidian 语义色变量，自动适配浅色/深色主题
+   ========================================================================== */
+
+.vps-modal {
+	width: min(720px, 92vw);
+}
+
+.vps-modal .modal-content {
+	padding-top: 0;
+}
+
+/* 模式切换 segment */
+.vps-segment {
+	display: flex;
+	gap: 6px;
+	margin-bottom: 10px;
+}
+
+.vps-segment button {
+	flex: 1;
+}
+
+.vps-segment button.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-color: var(--interactive-accent);
+}
+
+/* 选项行（推送/拉取共用） */
+.vps-opts {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 4px 0 10px;
+	flex-wrap: wrap;
+}
+
+.vps-opt {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: var(--font-ui-small);
+}
+
+.vps-opt-grow {
+	flex: 1;
+	min-width: 200px;
+}
+
+.vps-opt-grow select {
+	max-width: 220px;
+}
+
+/* 推送两栏 */
+.vps-cols {
+	display: flex;
+	gap: 12px;
+	align-items: stretch;
+}
+
+.vps-col {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.vps-col-title {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	padding: 0 2px 4px;
+}
+
+.vps-col-tools {
+	display: flex;
+	gap: 10px;
+	padding: 0 2px 6px;
+}
+
+.vps-link-btn {
+	background: none;
+	border: none;
+	box-shadow: none;
+	color: var(--text-accent);
+	font-size: var(--font-ui-smaller);
+	padding: 0;
+	height: auto;
+	cursor: pointer;
+}
+
+.vps-check-list {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	overflow-y: auto;
+	max-height: min(44vh, 400px);
+	padding: 2px 0;
+}
+
+.vps-check-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 10px;
+	font-size: var(--font-ui-small);
+}
+
+.vps-check-row:hover {
+	background: var(--background-modifier-hover);
+}
+
+.vps-check-label {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* 仓库总览 */
+.vps-ov-stats {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	padding: 0 2px 10px;
+}
+
+.vps-vault-group {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	margin-bottom: 6px;
+}
+
+.vps-vault-group summary {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	cursor: pointer;
+	list-style: none;
+	user-select: none;
+}
+
+.vps-vault-group summary::-webkit-details-marker {
+	display: none;
+}
+
+.vps-vault-group summary::before {
+	content: "▸";
+	color: var(--text-faint);
+	transition: transform 0.1s ease;
+}
+
+.vps-vault-group[open] summary::before {
+	transform: rotate(90deg);
+}
+
+.vps-vault-group summary:hover {
+	background: var(--background-modifier-hover);
+}
+
+.vps-vault-name {
+	font-weight: var(--font-medium);
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vps-count-badge {
+	flex: none;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	background: var(--background-modifier-hover);
+	border-radius: 4px;
+	padding: 1px 6px;
+}
+
+.vps-count-badge.is-missing {
+	color: var(--text-on-accent);
+	background: var(--interactive-accent);
+}
+
+.vps-vault-body {
+	padding: 2px 12px 10px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.vps-vault-body .vps-check-list,
+.vps-vault-body .vps-item {
+	border: none;
+}
+
+.vps-vault-actions {
+	display: flex;
+	justify-content: flex-end;
+	padding-top: 8px;
+}
+
+/* 推送结果 log */
+.vps-log {
+	margin-top: 10px;
+	max-height: 160px;
+	overflow-y: auto;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.vps-log-line.is-error {
+	color: var(--text-error);
+}
+
+/* 顶栏：源仓库选择 */
+.vps-modal .setting-item {
+	border: none;
+	padding: 8px 0 4px;
+}
+
+.vps-toggle-label {
+	color: var(--text-normal);
+	font-size: var(--font-ui-small);
+	margin-right: 8px;
+}
+
+/* 状态文字 */
+.vps-status {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	padding: 16px 0;
+	text-align: center;
+}
+
+.vps-status.is-error {
+	color: var(--text-error);
+	text-align: left;
+}
+
+/* 差异列表 */
+.vps-list {
+	max-height: min(52vh, 480px);
+	overflow-y: auto;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	padding: 4px 0;
+}
+
+.vps-group-title {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	padding: 8px 12px 4px;
+	letter-spacing: 0.02em;
+}
+
+.vps-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 12px;
+}
+
+.vps-item:hover {
+	background: var(--background-modifier-hover);
+}
+
+.vps-item.is-readonly {
+	opacity: 0.55;
+}
+
+.vps-item.is-done {
+	opacity: 0.75;
+}
+
+.vps-item.is-error {
+	background: var(--background-modifier-error-hover);
+}
+
+.vps-item input[type="checkbox"] {
+	flex: none;
+}
+
+.vps-item-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.vps-item-title {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.vps-item-name {
+	font-weight: var(--font-medium);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.vps-item-id {
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.vps-item-meta {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-top: 2px;
+}
+
+/* 徽标 */
+.vps-badge {
+	flex: none;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-on-accent);
+	background: var(--interactive-accent);
+	border-radius: 4px;
+	padding: 1px 6px;
+}
+
+.vps-badge.is-downgrade {
+	color: var(--text-on-accent);
+	background: var(--text-error);
+}
+
+/* 底栏 */
+.vps-footer {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding-top: 12px;
+}
+
+.vps-summary {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	flex: 1;
+}

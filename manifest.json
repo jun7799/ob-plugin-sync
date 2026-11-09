@@ -1,0 +1,9 @@
+{
+	"id": "obsidian-plugin-sync",
+	"name": "Vault Plugin Sync",
+	"version": "1.2.1",
+	"minAppVersion": "1.4.0",
+	"description": "Overview, push and pull plugins across all your vaults. 查看各仓库插件清单，按仓库挑选安装，或批量推送/拉取插件。",
+	"author": "AI混子-俊",
+	"isDesktopOnly": true
+}

@@ -1,0 +1,26 @@
+{
+	"name": "obsidian-plugin-sync",
+	"version": "1.0.0",
+	"description": "Sync community plugins from another Obsidian vault into the current vault",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"test": "node tests/run.mjs"
+	},
+	"keywords": [
+		"obsidian",
+		"obsidian-plugin",
+		"vault",
+		"plugin-sync"
+	],
+	"author": "AI混子-俊",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^22.10.0",
+		"esbuild": "^0.25.0",
+		"obsidian": "^1.7.2",
+		"tslib": "2.8.1",
+		"typescript": "5.7.2"
+	}
+}
